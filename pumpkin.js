@@ -16,18 +16,6 @@ const Pumpkin = db.define('pumpkin', {
     evil:{
         type:BOOLEAN,
         defaultValue:false,
-        validate:{
-            createEvil (){
-                let value = Math.round(Math.random)
-                if (value === 1) {
-                    this.evil = true;
-                    this.name += 'EVIL'
-                }
-                else{
-                    this.name += 'GOOD'
-                }
-            }
-        }
     },
     carved:{
         type:BOOLEAN,
@@ -35,9 +23,20 @@ const Pumpkin = db.define('pumpkin', {
     },
     candle:{
         type:BOOLEAN,
+        defaultValue:false
     },
 })
 
+Pumpkin.beforeCreate((pumpkin) => {
+    let value = Math.round(Math.random)
+    if (value === 1) {
+        pumkin.evil = true;
+        pumpkin.name += 'EVIL'
+    }
+    else{
+        pumpkin.name += 'GOOD'
+    }
+})
 Pumpkin.prototype.lightcandle = () => {
     return new Promise((res) => {
         if (this.candle === false) this.candle = true
